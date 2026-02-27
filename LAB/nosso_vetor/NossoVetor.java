@@ -1,9 +1,10 @@
+import java.util.Random;
+
 public class NossoVetor {
     private int[] vetor;
     private int ocupacao;
     private int capacidade;
     
-
     public NossoVetor () {
         vetor = new int[10];
         ocupacao = 0; //por clareza
@@ -31,25 +32,25 @@ public class NossoVetor {
     public boolean estaCheio () {
         return ocupacao == capacidade;
     }
-    //public boolean adiciona (int elemento) {
-    //    if (estaCheio()) return false;
-    //    else {
-    //        vetor[ocupacao++] = elemento;
-    //        //ocupacao++;
-    //        return true;
-    //    }
-    //}
-    public void adiciona (int i){
+    // public boolean adiciona (int elemento) {
+    //     if (estaCheio()) return false;
+    //     else {
+    //         vetor[ocupacao++] = elemento;
+    //         //ocupacao++;
+    //         return true;
+    //     }
+    // }
+    public void adiciona (int i) {
         if (estaCheio()) {
             redimensiona(capacidade * 2);
         }
         vetor[ocupacao++] = i;
     }
-    //public int remove () {
-    //    if (estaVazio3()) return -1; //cuidado
-    //    //ocupacao--;
-    //    return vetor[--ocupacao];
-    //}
+    // public int remove () {
+    //     if (estaVazio3()) return -1; //cuidado
+    //     //ocupacao--;
+    //     return vetor[--ocupacao];
+    // }
     public int remove () {
         if (estaVazio3()) return -1;
         int removido = vetor[--ocupacao];
@@ -60,25 +61,25 @@ public class NossoVetor {
     }
     private void redimensiona (int novaCapacidade) {
         int[] temp = new int[novaCapacidade];
-                for (int j=0; j < ocupacao; j++) {
-                    temp[j] = vetor[j];
-                }
-                vetor = temp;
-                capacidade = capacidade / 2;
+        for (int j=0; j < ocupacao; j++) {
+            temp[j] = vetor[j];
+        }
+        vetor = temp;
+        capacidade = novaCapacidade;
     }
     public int size() {
         return ocupacao;
     }
     public int getElemento (int indice) {
         if (indice > ocupacao -1) return -1;
-        //esta condicao atende a condicao de vetor vazio tambem
+        //esta condição atende a condição de vetor vazio também
         return vetor[indice];
     }
     public boolean contains (int elemento) {
         for (int i=0; i < ocupacao; i++)
             if (vetor[i] == elemento)
                 return true;
-            return false;
+        return false;
     }
     public NossoVetor listaPosicoes (int elemento) {
         NossoVetor lista = new NossoVetor(this.ocupacao);
@@ -89,13 +90,31 @@ public class NossoVetor {
     }
     @Override
     public String toString () {
-        if (estaVazio3()) return "vetor vazio";
-        String s = "capacidade = " + capacidade + "\n";
+        if (estaVazio3()) return "\nvetor vazio";
+        String s = "\ncapacidade = " + capacidade + "\n";
         for (int i=0; i < ocupacao; i++)
             s += vetor[i] + " ";
         return s;
     }
     public void esvaziaVetor () {
         ocupacao = 0;
-    }   
+    }
+    public void bubbleSort () {
+        for (int i=1; i<ocupacao; i++) {//número de varreduras
+            for (int j=0; j<ocupacao-i; j++) { //j é posição, começa do 0
+                if (vetor[j] > vetor[j+1]) {
+                    int temp = vetor[j];
+                    vetor[j] = vetor[j+1];
+                    vetor[j+1] = temp;
+                }
+            }
+        }
+    }
+    public void preencheVetor () {
+        Random random = new Random();
+        for (int i=0; i<capacidade; i++) {
+            vetor[i] = random.nextInt(capacidade * 10);
+        }
+        ocupacao = capacidade;
+    }
 }
